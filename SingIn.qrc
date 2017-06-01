@@ -20,5 +20,11 @@
         <file>Resources/LoginWindow/LoginState/state_online.png</file>
         <file>Resources/LoginWindow/LoginState/state_Qme.png</file>
         <file>Resources/LoginWindow/keyboard.png</file>
+        <file>Resources/LoginWindow/foot.png</file>
+        <file>Resources/LoginWindow/head.png</file>
+        <file>Resources/LoginWindow/backgound.gif</file>
+        <file>Resources/LoginWindow/arrowDown.png</file>
+        <file>Resources/LoginWindow/arrowRight.png</file>
+        <file>Resources/LoginWindow/list.css</file>
     </qresource>
 </RCC>

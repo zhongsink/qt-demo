@@ -15,11 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         widget.cpp \
     dialog.cpp \
-    mytitlebar.cpp
+    mytitlebar.cpp \
+    personlist.cpp \
+    personlistbuddy.cpp
 
 HEADERS  += widget.h \
     dialog.h \
-    mytitlebar.h
+    mytitlebar.h \
+    personlist.h \
+    personlistbuddy.h
 
 FORMS    += widget.ui \
     dialog.ui

@@ -23,7 +23,7 @@ Dialog::Dialog(QWidget *parent) :
     //背景图;
     QLabel* pBack = new QLabel(this);
     QMovie *movie = new QMovie();
-    movie->setFileName(":/Resources/LoginWindow/back.gif");
+    movie->setFileName(":/Resources/LoginWindow/backgound.gif");
     movie->start();
     movie->stop();
     pBack->setMovie(movie);
