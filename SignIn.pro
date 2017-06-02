@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SignIn
@@ -17,16 +17,19 @@ SOURCES += main.cpp\
     dialog.cpp \
     mytitlebar.cpp \
     personlist.cpp \
-    personlistbuddy.cpp
+    personlistbuddy.cpp \
+    contact.cpp
 
 HEADERS  += widget.h \
     dialog.h \
     mytitlebar.h \
     personlist.h \
-    personlistbuddy.h
+    personlistbuddy.h \
+    contact.h
 
 FORMS    += widget.ui \
-    dialog.ui
+    dialog.ui \
+    contact.ui
 
 RESOURCES += \
     SingIn.qrc

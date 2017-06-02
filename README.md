@@ -12,3 +12,7 @@
 
 ![主面板](/image/main.png)
 
+通信页
+
+![通信页](/image/contact.png)
+

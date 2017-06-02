@@ -4,6 +4,8 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QLineEdit>
+#include "contact.h"
+
 //自定义QListWidget
 class personList : public QListWidget //继承QListWidget，可以使用它本身自带的函数，更方便
 {
@@ -11,6 +13,7 @@ class personList : public QListWidget //继承QListWidget，可以使用它本�
 public:
     explicit personList(QListWidget *parent = 0);
     void mousePressEvent(QMouseEvent *event);//鼠标点击事件
+    void mouseDoubleClickEvent(QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent*);//菜单事件，为了显示菜单
     void initMenu();//初始化菜单
     QMenu *blankMenu;//点击空白上的菜单
@@ -20,6 +23,7 @@ public:
     QMap<QListWidgetItem*,bool> isHideMap;//用来判断该组是否隐藏了
     QLineEdit *groupNameEdit;//组的名字，重命名的时候需要用到
     QListWidgetItem *currentItem;//当前的项
+    Contact contact;
 
 private:
     // 加载样式文件;

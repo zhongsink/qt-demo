@@ -2,6 +2,7 @@
 #include <QAction>
 #include <QIcon>
 #include "personlistbuddy.h"
+#include "QDebug"
 personList::personList(QListWidget *parent) :
     QListWidget(parent)
 {
@@ -24,8 +25,8 @@ void personList::initMenu()
     QAction *delBuddy = new QAction("删除好友", this);
     //设置：
     groupNameEdit->setParent(this);  //设置父类
-    groupNameEdit->hide(); //设置初始时隐藏
     groupNameEdit->setPlaceholderText("好友列表");//设置初始时的内容
+    groupNameEdit->hide(); //设置初始时隐藏
     //布局：
     blankMenu->addAction(addGroup);
     groupMenu->addAction(delGroup);
@@ -41,10 +42,26 @@ void personList::initMenu()
     connect(delBuddy,SIGNAL(triggered()),this,SLOT(slotDelBuddy()));
     this->loadStyleSheet("list");
     this->slotAddGroup();
+    this->slotRenameEditFshed();
     this->slotAddBuddy();
 
 }
 //鼠标点击事件
+void personList::mouseDoubleClickEvent(QMouseEvent *event){
+    QListWidget::mouseDoubleClickEvent(event);
+    if(currentItem==NULL)                           //如果点击到的是空白处
+    {
+        return;
+    }
+    if(currentItem==groupMap.value(currentItem))    // 如果点击到的是组
+        return;
+    else{
+        //否则点击到的是好友
+        qDebug()<<"1";
+        this->contact.show();
+    }
+}
+
 void personList::mousePressEvent(QMouseEvent *event)
 {
     QListWidget::mousePressEvent(event); // 如果不调用基类mousePressEvent，item被select会半天不响应,调用父类，让QSS起效，因为QSS基于父类QListWidget，子类就是子窗口，就是最上层窗口，是覆盖在父窗口上的，所以先于父窗口捕获消息
@@ -92,8 +109,10 @@ void personList::contextMenuEvent(QContextMenuEvent *event)
     }
     if(currentItem==groupMap.value(currentItem))    // 如果点击到的是组
         groupMenu->exec(QCursor::pos());
-    else                                            //否则点击到的是好友
+    else{
+        //否则点击到的是好友
         personMenu->exec(QCursor::pos());
+    }
 }
 //添加组
 void personList::slotAddGroup()
@@ -107,7 +126,7 @@ void personList::slotAddGroup()
     groupNameEdit->setText(tr("好友列表")); //设置默认内容
     groupNameEdit->selectAll();        //设置全选
     groupNameEdit->setGeometry(this->visualItemRect(newItem).left()+15,this->visualItemRect(newItem).top()+1,this->visualItemRect(newItem).width(),this->visualItemRect(newItem).height()-2);//出现的位置
-    groupNameEdit->show();              //显示
+    groupNameEdit->show();             //显示
     groupNameEdit->setFocus();          //获取焦点
     currentItem = newItem;     // 因为要给group命名，所以当前的currentItem设为该group
 }
@@ -134,12 +153,12 @@ void personList::slotRename()
     groupNameEdit->setFocus();                        //获取焦点
 }
 
-//添加好友，主要是为了测试功能，实际工程里可以改成动态读取数据库进行添加好友
+//添加好友
 void personList::slotAddBuddy()
 {
     personListBuddy *buddy=new personListBuddy();   //创建一个自己定义的信息类
     buddy->headPath=":/Resources/LoginWindow/HeadImage.png";                          //设置头像路径
-    buddy->name->setText("逍遥圣帝");                  //设置用户名
+    buddy->name->setText("张三");                  //设置用户名
     buddy->sign->setText("用通俗的语言，讲深刻的技术。");   //设置个性签名
     QList<QListWidgetItem*> tem = groupMap.keys(currentItem);//当前组对应的项（包括组本身和好友）复制给tem
 

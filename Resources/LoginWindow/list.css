@@ -1,9 +1,10 @@
 QListWidget{  
-    background:white;  
+    background:transparent;
     color:black;  
     border:none;
-    width:278px;
+    width:100%;
     height:400px;
+    margin: 5px 0px 0px 5px;
 }  
   
 QListWidget::item{  
@@ -14,13 +15,11 @@ QListWidget::item{
 
 
 QListWidget::item:selected{
-    background:rgb(252,233,161);
+    background:rgba(252,233,161,0.3);
     color:black;
 }
 
-QScrollBar{
-    width:278px;
-}
+
 QScrollBar:vertical {                 
     background:transparent;  
     width:9px;  
