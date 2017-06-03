@@ -4,7 +4,9 @@
 #include <QMovie>
 #include <QLabel>
 #include "mytitlebar.h"
-
+#include "database.h"
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -60,8 +62,11 @@ Dialog::~Dialog()
 
 void Dialog::on_pushButton_clicked()
 {
-    if(!QString::compare(ui->usernameEdit->text(),"abc")&& !QString::compare(ui->passwordEdit->text(),"123456"))
-        accept();
+    DataBase *db = new DataBase();
+    QSqlQuery query =db->GetValues();
+    while (query.next())
+        if(!QString::compare(ui->usernameEdit->text(),query.value(1).toString())&& !QString::compare(ui->passwordEdit->text(),query.value(2).toString()))
+            accept();
 }
 
 
