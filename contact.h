@@ -18,6 +18,7 @@ public:
 private slots:
     void on_pushButton_clicked();
     void processPendingDatagram();
+    void keyPressEvent(QKeyEvent  *event);
 
 private:
     QUdpSocket *receiver;
