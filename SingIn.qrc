@@ -26,5 +26,8 @@
         <file>Resources/LoginWindow/arrowDown.png</file>
         <file>Resources/LoginWindow/arrowRight.png</file>
         <file>Resources/LoginWindow/list.css</file>
+        <file>Resources/LoginWindow/aaa.png</file>
+        <file>Resources/LoginWindow/land.png</file>
+        <file>Resources/LoginWindow/HeadImage_small.png</file>
     </qresource>
 </RCC>

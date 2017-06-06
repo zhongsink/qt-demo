@@ -4,18 +4,37 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QFile>
+#include "mytitlebar.h"
 
 Contact::Contact(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Contact)
 {
+    MyTitleBar *m_titleBar = new MyTitleBar(this);
+    connect( m_titleBar, SIGNAL(signalButtonMinClicked()), this, SLOT(onButtonMinClicked()));
+    connect( m_titleBar, SIGNAL(signalButtonCloseClicked()), this, SLOT(onButtonCloseClicked()));
+
+    // FramelessWindowHint属性设置窗口去除边框;
+    // WindowMinimizeButtonHint 属性设置在窗口最小化时，点击任务栏窗口可以显示出原窗口;
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);
+
     receiver = new QUdpSocket(this);
-    receiver->bind(23456, QUdpSocket::ShareAddress);
+    receiver->bind(12345, QUdpSocket::ShareAddress);
     connect(receiver, &QUdpSocket::readyRead, this, &Contact::processPendingDatagram);
 
     ui->setupUi(this);
-
+    ui->label->setPixmap(QPixmap(":/Resources/LoginWindow/aaa.png"));
+    ui->label_2->setPixmap(QPixmap(":/Resources/LoginWindow/aaa.png"));
+    ui->label_3->setPixmap(QPixmap(":/Resources/LoginWindow/land.png"));
+    ui->label_4->setPixmap(QPixmap(":/Resources/LoginWindow/HeadImage_small.png"));
     sender = new QUdpSocket(this);
+
+    //bar
+    m_titleBar->move(0, 0);
+    m_titleBar->raise();
+    m_titleBar->setBackgroundColor(144, 144, 144 , true);
+    m_titleBar->setButtonType(MIN_BUTTON);
+    m_titleBar->setTitleWidth(this->width());
 }
 
 Contact::~Contact()
@@ -39,7 +58,7 @@ void Contact::on_pushButton_clicked()
     QByteArray datagram = ui->textEdit->toPlainText().toUtf8();
     ui->listWidget->addItem(datagram);
     sender->writeDatagram(datagram.data(), datagram.size(),
-                          QHostAddress("127.0.0.1"), 12345);
+                          QHostAddress("127.0.0.1"), 23456);
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
         QTextStream out(&data);
         out << datagram + "\r\n" ;
@@ -71,3 +90,20 @@ void Contact::processPendingDatagram()
     data.close();
 }
 
+void Contact::onButtonCloseClicked()
+{
+    close();
+}
+
+
+void Contact::onButtonMinClicked()
+{
+    if (Qt::Tool == (windowFlags() & Qt::Tool))
+    {
+        hide();    //设置了Qt::Tool 如果调用showMinimized()则窗口就销毁了
+    }
+    else
+    {
+        showMinimized();
+    }
+}
