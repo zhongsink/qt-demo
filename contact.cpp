@@ -20,9 +20,7 @@ Contact::Contact(QWidget *parent) :
     // WindowMinimizeButtonHint 属性设置在窗口最小化时，点击任务栏窗口可以显示出原窗口;
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);
 
-    receiver = new QUdpSocket(this);
-    receiver->bind(12345, QUdpSocket::ShareAddress);
-    connect(receiver, &QUdpSocket::readyRead, this, &Contact::processPendingDatagram);
+
 
     ui->setupUi(this);
     ui->label->setPixmap(QPixmap(":/Resources/LoginWindow/aaa.png"));
@@ -30,7 +28,7 @@ Contact::Contact(QWidget *parent) :
     ui->label_3->setPixmap(QPixmap(":/Resources/LoginWindow/land.png"));
     ui->label_4->setPixmap(QPixmap(":/Resources/LoginWindow/HeadImage_small.png"));
     sender = new QUdpSocket(this);
-    ui->label_6->setText(".");
+
     //bar
     m_titleBar->move(0, 0);
     m_titleBar->raise();
@@ -42,6 +40,16 @@ Contact::Contact(QWidget *parent) :
 Contact::~Contact()
 {
     delete ui;
+}
+void Contact::changeUsername(QString username){
+    this->username=username;
+    int port=this->username=="123456789"? 23456: 12345;
+    receiver = new QUdpSocket(this);
+    receiver->bind(port, QUdpSocket::ShareAddress);
+    connect(receiver, &QUdpSocket::readyRead, this, &Contact::processPendingDatagram);
+    if(this->username!="123456789"){
+        ui->label_6->setText(".");
+    }
 }
 void Contact::keyPressEvent(QKeyEvent *event){
     if (event->type() == QEvent::KeyPress)
@@ -56,11 +64,11 @@ void Contact::keyPressEvent(QKeyEvent *event){
 void Contact::on_pushButton_clicked()
 {
     QFile data("file.txt");
-
+    int port=this->username=="123456789"? 12345: 23456;
     QByteArray datagram = ui->textEdit->toPlainText().toUtf8();
     ui->listWidget->addItem(".  "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  " +datagram);
     sender->writeDatagram(datagram.data(), datagram.size(),
-                          QHostAddress("127.0.0.1"), 23456);
+                          QHostAddress("127.0.0.1"), port);
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
         QTextStream out(&data);
         out << datagram + "\r\n" ;

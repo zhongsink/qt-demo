@@ -47,52 +47,6 @@ bool DataBase::insert()
     query.exec("insert into Users values(1, '456487912' , '123456')");
     query.exec("insert into Users values(2, '123456789' , '123456')");
 
-//    if (names.size() != values.size())
-//    {
-//        return false;
-//    }
-
-//    QSqlQuery query(QSqlDatabase::database());
-
-//    QString sql = QString("insert into ") + table + QString("(");
-
-//    int i;
-
-//    for (i=0; i < names.size(); i++)
-//    {
-//        sql = sql + names.value(i);
-//        if (i != names.size() - 1)
-//        {
-//            sql+=QString(",");
-//        }
-//        else
-//        {
-
-//            sql = sql + QString(")");
-//        }
-//    }
-
-//    sql = sql + QString("values (");
-
-//    for (i = 0; i < values.size(); i++)
-//    {
-//        sql = sql + QString("'") + values.value(i) + QString("'");
-//        if (i != values.size()-1)
-//        {
-//            sql = sql + QString(",");
-//        }
-//    }
-
-//    sql = sql + QString(")");
-
-//    if (query.exec(sql))
-//    {
-//        return true;
-//    }
-//    else
-//    {
-//        return false;
-//    }
     return true;
 }
 

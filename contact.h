@@ -16,6 +16,7 @@ class Contact : public QWidget
 public:
     explicit Contact(QWidget *parent = 0);
     QString username;
+    void changeUsername(QString username);
     ~Contact();
 private slots:
     void on_pushButton_clicked();

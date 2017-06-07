@@ -60,8 +60,8 @@ void personList::mouseDoubleClickEvent(QMouseEvent *event){
     else{
         //否则点击到的是好友
 //        qDebug()<<"1";
-        this->contact.username=this->username;
-        //qDebug()<< this->contact.username;
+        this->contact.changeUsername(this->username);
+        qDebug()<< this->contact.username;
         this->contact.show();
     }
 }
