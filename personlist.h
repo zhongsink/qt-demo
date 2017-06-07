@@ -5,13 +5,15 @@
 #include <QMouseEvent>
 #include <QLineEdit>
 #include "contact.h"
+#include <QString>
 
 //自定义QListWidget
 class personList : public QListWidget //继承QListWidget，可以使用它本身自带的函数，更方便
 {
     Q_OBJECT
 public:
-    explicit personList(QListWidget *parent = 0);
+    explicit personList(QListWidget *parent = 0,QString username =0);
+    QString username;
     void mousePressEvent(QMouseEvent *event);//鼠标点击事件
     void mouseDoubleClickEvent(QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent*);//菜单事件，为了显示菜单

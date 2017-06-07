@@ -3,12 +3,14 @@
 #include <QIcon>
 #include "personlistbuddy.h"
 #include "QDebug"
-personList::personList(QListWidget *parent) :
+#include <QString>
+personList::personList(QListWidget *parent , QString username) :
     QListWidget(parent)
 {
+    this->username=username;
     setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//水平滚动条关闭
-    initMenu();
+
 }
 //初始化菜单
 void personList::initMenu()
@@ -57,7 +59,9 @@ void personList::mouseDoubleClickEvent(QMouseEvent *event){
         return;
     else{
         //否则点击到的是好友
-        qDebug()<<"1";
+//        qDebug()<<"1";
+        this->contact.username=this->username;
+        //qDebug()<< this->contact.username;
         this->contact.show();
     }
 }
@@ -158,7 +162,7 @@ void personList::slotAddBuddy()
 {
     personListBuddy *buddy=new personListBuddy();   //创建一个自己定义的信息类
     buddy->headPath=":/Resources/LoginWindow/HeadImage.png";                          //设置头像路径
-    buddy->name->setText("张三");                  //设置用户名
+    this->username=="123456789"? buddy->name->setText("张三"): buddy->name->setText(". ") ;                  //设置用户名
     buddy->sign->setText("用通俗的语言，讲深刻的技术。");   //设置个性签名
     QList<QListWidgetItem*> tem = groupMap.keys(currentItem);//当前组对应的项（包括组本身和好友）复制给tem
 

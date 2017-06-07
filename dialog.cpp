@@ -7,6 +7,7 @@
 #include "database.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDebug>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -66,7 +67,12 @@ void Dialog::on_pushButton_clicked()
     QSqlQuery query =db->GetValues();
     while (query.next())
         if(!QString::compare(ui->usernameEdit->text(),query.value(1).toString())&& !QString::compare(ui->passwordEdit->text(),query.value(2).toString()))
+        {
+            this->username=query.value(1).toString();
+//            qDebug()<< this->username;
             accept();
+        }
+
 }
 
 

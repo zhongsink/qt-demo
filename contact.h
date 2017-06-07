@@ -2,6 +2,7 @@
 #define CONTACT_H
 
 #include <QWidget>
+#include <QString>
 class QUdpSocket;
 
 namespace Ui {
@@ -14,6 +15,7 @@ class Contact : public QWidget
 
 public:
     explicit Contact(QWidget *parent = 0);
+    QString username;
     ~Contact();
 private slots:
     void on_pushButton_clicked();

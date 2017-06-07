@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include "personlist.h"
+#include <QDebug>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -21,7 +22,8 @@ Widget::Widget(QWidget *parent) :
     // WindowMinimizeButtonHint 属性设置在窗口最小化时，点击任务栏窗口可以显示出原窗口;
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);
     //列表
-    new personList(ui->listItem);
+
+    this->list=new personList(ui->listItem ,this->username);
 
     //背景图;
     QLabel* pBack = new QLabel(this);

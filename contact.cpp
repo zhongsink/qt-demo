@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QFile>
 #include "mytitlebar.h"
+#include <QDateTime>
+#include <QByteArray>
 
 Contact::Contact(QWidget *parent) :
     QWidget(parent),
@@ -28,7 +30,7 @@ Contact::Contact(QWidget *parent) :
     ui->label_3->setPixmap(QPixmap(":/Resources/LoginWindow/land.png"));
     ui->label_4->setPixmap(QPixmap(":/Resources/LoginWindow/HeadImage_small.png"));
     sender = new QUdpSocket(this);
-
+    ui->label_6->setText(".");
     //bar
     m_titleBar->move(0, 0);
     m_titleBar->raise();
@@ -56,7 +58,7 @@ void Contact::on_pushButton_clicked()
     QFile data("file.txt");
 
     QByteArray datagram = ui->textEdit->toPlainText().toUtf8();
-    ui->listWidget->addItem(datagram);
+    ui->listWidget->addItem(".  "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  " +datagram);
     sender->writeDatagram(datagram.data(), datagram.size(),
                           QHostAddress("127.0.0.1"), 23456);
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
@@ -81,7 +83,7 @@ void Contact::processPendingDatagram()
         // 接收数据报，将其存放到datagram中
         receiver->readDatagram(datagram.data(), datagram.size());
 
-        ui->listWidget->addItem(datagram);
+        ui->listWidget->addItem("张三 "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  "+ datagram);
     }
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
         QTextStream out(&data);

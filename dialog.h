@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QString>
 
 namespace Ui {
 class Dialog;
@@ -14,6 +15,7 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
+    QString username;
 
 private slots:
     void on_pushButton_clicked();
