@@ -65,13 +65,14 @@ void Contact::on_pushButton_clicked()
 {
     QFile data("file.txt");
     int port=this->username=="123456789"? 12345: 23456;
+    QString username= this->username!="123456789"? "张三": ". ";
     QByteArray datagram = ui->textEdit->toPlainText().toUtf8();
-    ui->listWidget->addItem(".  "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  " +datagram);
+    ui->listWidget->addItem(username + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  " +datagram);
     sender->writeDatagram(datagram.data(), datagram.size(),
                           QHostAddress("127.0.0.1"), port);
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
         QTextStream out(&data);
-        out << datagram + "\r\n" ;
+        out << username+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  " +datagram + "\r\n" ;
     }
     ui->textEdit->setText("");
     data.close();
@@ -82,6 +83,7 @@ void Contact::processPendingDatagram()
     // 拥有等待的数据报
     QFile data("file.txt");
     QByteArray datagram;
+    QString username= this->username =="123456789"? "张三": ". ";
     while(receiver->hasPendingDatagrams())
     {
 
@@ -91,11 +93,11 @@ void Contact::processPendingDatagram()
         // 接收数据报，将其存放到datagram中
         receiver->readDatagram(datagram.data(), datagram.size());
 
-        ui->listWidget->addItem("张三 "+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  "+ datagram);
+        ui->listWidget->addItem(username+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  "+ datagram);
     }
     if (data.open(QFile::WriteOnly | QIODevice::Append)) {
         QTextStream out(&data);
-        out << datagram +"\r\n";
+        out << username+ QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ "\r\n  "+ datagram +"\r\n";
     }
     data.close();
 }
